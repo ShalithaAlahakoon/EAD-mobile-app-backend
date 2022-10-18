@@ -1,0 +1,27 @@
+{
+  "name": "ead-mobile-app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start" : "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShalithaAlahakoon/EAD-mobile-app-backend.git"
+  },
+  "author": "shalitha alahakoon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShalithaAlahakoon/EAD-mobile-app-backend/issues"
+  },
+  "homepage": "https://github.com/ShalithaAlahakoon/EAD-mobile-app-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
