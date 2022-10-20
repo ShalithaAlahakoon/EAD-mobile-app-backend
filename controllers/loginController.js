@@ -1,4 +1,3 @@
-const express = require('express');
 const Login = require('../models/login.js');
 
 const getAllLogins = async (req, res) => {
