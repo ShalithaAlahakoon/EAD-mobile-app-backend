@@ -11,7 +11,20 @@ router.route('/logins')
 
 router.route('/stations')
     // .get(stationController.getAllStations)
-    .post(stationController.createStation);
+    .post(stationController.createStation)
+    .get(stationController.getAllStations);
+
+//get areas
+router.route('/stations/areas')
+    .get(stationController.getAreas);
+
+//get station names by area
+router.route('/stations/names/:area')
+    .get(stationController.getStationNamesByArea);
+
+//get station by name
+router.route('/stations/:name')
+    .get(stationController.getStationByName);
 
 //export router
 module.exports = router;

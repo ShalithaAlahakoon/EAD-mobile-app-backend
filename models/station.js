@@ -20,7 +20,7 @@ const stationSchema = new mongoose.Schema({
         maxlength: 50
     },
     //fuel types object array
-    fuelTypes : {
+    fuelTypes : [{
        
         fuleType: {
             type: String,
@@ -40,7 +40,7 @@ const stationSchema = new mongoose.Schema({
             type: Date,
             required: true,
         },
-    },
+    }],
     owner : {
         type: String,
         required: true,
