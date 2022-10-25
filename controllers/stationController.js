@@ -34,7 +34,13 @@ const getAreas = async (req, res) => {
     try {
         //get all areas form stations
         const areas = await Station.find().distinct('stationArea');
-        res.json(areas);
+        //create json object
+        var areasJson = {
+            areas: areas
+        }
+
+
+        res.json(areasJson);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
