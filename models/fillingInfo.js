@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 
 const fillingSchema = new mongoose.Schema({
+
+    area:{
+        type: String,
+        required: true
+    },
+    stationName:{
+        type: String,
+        required: true
+    },
+    fuelType:{
+        type: String,
+        required: true
+    },
     fillingArrivel : {
         type: String,
         required: true,
