@@ -7,7 +7,6 @@ const userController = require('../controllers/userController');
 const queueController = require('../controllers/queueController');
 
 
-
 //get logins
 router.route('/logins')
     .get(loginController.getAllLogins)
@@ -23,6 +22,7 @@ router.route('/stations')
     // .get(stationController.getAllStations)
     .post(stationController.createStation)
     .get(stationController.getAllStations);
+
 //fuelRoutes
 router.route('/fuel')
     .post(fuelCntroller.addFuels);
