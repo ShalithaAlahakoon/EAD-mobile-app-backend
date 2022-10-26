@@ -3,12 +3,21 @@ const router = express.Router();
 const loginController = require('../controllers/loginController.js');
 const stationController = require('../controllers/stationController.js');
 const fuelCntroller = require('../controllers/fuelController');
+const userController = require('../controllers/userController');
+const queueController = require('../controllers/queueController');
+
 
 
 //get logins
 router.route('/logins')
     .get(loginController.getAllLogins)
     .post(loginController.createLogin);
+
+    //user
+router.route('/users')
+    .get(userController.getAllUsers)
+    .post(userController.createUser);
+
 
 router.route('/stations')
     // .get(stationController.getAllStations)
@@ -30,6 +39,15 @@ router.route('/stations/names/:area')
 //get station by name
 router.route('/stations/:name')
     .get(stationController.getStationByName);
+
+//queue routes
+router.route('/queues')
+    .get(queueController.getAllQueues)
+    .post(queueController.createQueue);
+
+router.route('/queues/:stationName')
+    .get(queueController.getQueueByStationName)
+    .patch(queueController.updateQueue);
 
 //export router
 module.exports = router;
