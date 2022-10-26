@@ -4,7 +4,6 @@ const loginController = require('../controllers/loginController.js');
 const stationController = require('../controllers/stationController.js');
 const fuelCntroller = require('../controllers/fuelController');
 
-
 //get logins
 router.route('/logins')
     .get(loginController.getAllLogins)
@@ -14,6 +13,7 @@ router.route('/stations')
     // .get(stationController.getAllStations)
     .post(stationController.createStation)
     .get(stationController.getAllStations);
+
 //fuelRoutes
 router.route('/fuel')
     .post(fuelCntroller.addFuels);
