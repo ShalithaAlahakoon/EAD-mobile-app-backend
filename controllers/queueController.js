@@ -1,20 +1,9 @@
 const Queue = require('../models/queue');
 
-//get queue by staion name 
-const getQueueByStationName = async (req, res) => {
-    try {
-        const queue = await Queue.findOne({ stationName: req.params.stationName });
-        // put qeueu in Array
-        var queueArray = [];
-        queueArray.push(queue);
-        res.json(queueArray);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-}
 
 //get all queues
 const getAllQueues = async (req, res) => {
+    console.log("getAllQueues")
     try {
         const queues = await Queue.find();
         res.json(queues);
@@ -23,70 +12,73 @@ const getAllQueues = async (req, res) => {
     }
 }
 
-//create queue
-const createQueue = async (req, res) => {
-    const queue = new Queue({
-        stationName: req.body.stationName,
-        Octane92Queue: req.body.Octane92Queue,
-        Octane95Queue: req.body.Octane95Queue,
-        DieselQueue: req.body.DieselQueue,
-        SuperDieselQueue: req.body.SuperDieselQueue
-    });
+//arrived
+const arrived = async (req, res) => {
+    console.log("arrived")
+    
+    const station = req.body.stationName;
+    const fuel_type = req.body.fuel_type;
+
     try {
-        const newQueue = await queue.save();
-        res.status(201).json(newQueue);
+        const queue = await Queue.findOne({ stationName: station, fuel_type: fuel_type });
+        if (queue == null) {
+            //create new queue
+            const newQueue = new Queue({
+                stationName: station,
+                fuel_type: fuel_type,
+                count: 1
+            });
+            const createdQueue = await newQueue.save();
+            res.status(201).json(createdQueue);
+        }else{
+            queue.count = queue.count + 1;
+            const updatedQueue = await queue.save();
+            res.json(updatedQueue);
+        }
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        return res.status(500).json({ message: err.message });
     }
 }
 
-//update queue
-const updateQueue = async (req, res) => {
+//exit
+const exit = async (req, res) => {
+    console.log("exit")
+    const station = req.body.stationName;
+    const fuel_type = req.body.fuel_type;
+
     try {
-        const queue = await Queue.findOne({ stationName: req.params.stationName });
+        const queue = await Queue.findOne({ stationName: station, fuel_type: fuel_type });
         if (queue == null) {
-            return res.status(404).json({ message: 'Cannot find queue' })
+            return res.status(404).json({ message: 'Cannot find queue' });
+        }else{
+            queue.count = queue.count - 1;
+            const updatedQueue = await queue.save();
+            res.json(updatedQueue);
         }
-        if (req.body.stationName != null) {
-            queue.stationName = req.body.stationName
-        }
-        if (req.body.Octane92Queue != null) {
-            queue.Octane92Queue = req.body.Octane92Queue
-        }
-        if (req.body.Octane95Queue != null) {
-            queue.Octane95Queue = req.body.Octane95Queue
-        }
-        if (req.body.DieselQueue != null) {
-            queue.DieselQueue = req.body.DieselQueue
-        }
-        if (req.body.SuperDieselQueue != null) {
-            queue.SuperDieselQueue = req.body.SuperDieselQueue
-        }
-        const updatedQueue = await queue.save()
-        res.json(updatedQueue)
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        return res.status(500).json({ message: err.message });
     }
 }
 
-//delete queue
-const deleteQueue = async (req, res) => {
+//get all queues by statio name 
+const getQueuesByStationName = async (req, res) => {
+    console.log("getQueuesByStationName")
     try {
-        const queue = await Queue.findOne({ stationName: req.params.stationName });
-        if (queue == null) {
-            return res.status(404).json({ message: 'Cannot find queue' })
-        }
-        await queue.remove()
-        res.json({ message: 'Deleted Queue' })
+        const queues = await Queue.find({ stationName: req.body.stationName });
+        res.json(queues);
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message });
     }
 }
+
+
+
+
+
 
 module.exports = {
-    getQueueByStationName,
     getAllQueues,
-    createQueue,
-    updateQueue,
-    deleteQueue
+    arrived,
+    exit,
+    getQueuesByStationName
 };

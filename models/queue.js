@@ -5,21 +5,15 @@ const queueSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Octane92Queue: {
-        type: Number,
+    fuel_type: {
+        type: String,
         required: true
     },
-    Octane95Queue: {
+    count: {
         type: Number,
-        required: true
-    },
-    DieselQueue: {
-        type: Number,
-        required: true
-    },
-    SuperDieselQueue: {
-        type: Number,
-        required: true
+        required: true,
+        //can't be less than 0
+        min: 0
     }
 });
 

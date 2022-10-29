@@ -42,12 +42,13 @@ router.route('/stations/:name')
 
 //queue routes
 router.route('/queues')
-    .get(queueController.getAllQueues)
-    .post(queueController.createQueue);
-
-router.route('/queues/:stationName')
-    .get(queueController.getQueueByStationName)
-    .patch(queueController.updateQueue);
+    .get(queueController.getAllQueues);
+router.route('/queues/arrived')
+    .post(queueController.arrived);
+router.route('/queues/exit')
+    .post(queueController.exit);
+router.route('/queues/name')
+    .get(queueController.getQueuesByStationName);
 
 //export router
 module.exports = router;
