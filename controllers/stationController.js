@@ -68,6 +68,32 @@ const getStationByName = async (req, res) => {
     }
 }
 
+const updateFuel = async (req, res) => {
+    const station = await Station.findByIdAndUpdate(req.params.id);
+
+    if (!station) {
+        return res.status(400).json({
+            success: false,
+            message: 'No student  Group found'
+        });
+    } else {
+        const {stationName, fuelType, availability,litres } = req.body;
+
+        station.stationName = stationName;
+        station.fuelType = fuelType;
+        station.availability = availability;
+        station.litres = litres;
+
+        await station.save();
+
+        res.status(200).json({
+            success: true,
+            data: station
+        });
+    }
+}
+
+
 
 module.exports =  {
     createStation,
