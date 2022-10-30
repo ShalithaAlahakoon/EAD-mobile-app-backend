@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://eadmobileapp:zSdgsfQinj3WJVUZ@eadmobileapp.huxcwuv.mongodb.net/?retryWrites=true&w=majority'
+require('dotenv').config();
 
 const fillingController = require('./controllers/fillingController');
 
 const app = express();
 
-mongoose.connect(url, {useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('Connected to MongoDB...'))
 
 
