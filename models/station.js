@@ -34,12 +34,8 @@ const stationSchema = new mongoose.Schema({
         },
         nextArrival: {
             type: Date,
-            required: true,
-        },
-        nextDeparture: {
-            type: Date,
-            required: true,
-        },
+            required: false,
+        }
     }],
     owner : {
         type: String,
