@@ -21,7 +21,8 @@ router.route('/users')
 router.route('/stations')
     // .get(stationController.getAllStations)
     .post(stationController.createStation)
-    .get(stationController.getAllStations);
+    .get(stationController.getAllStations)
+    .put(stationController.updateStation);
 
 //fuelRoutes
 router.route('/fuel')

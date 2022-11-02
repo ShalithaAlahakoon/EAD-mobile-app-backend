@@ -79,13 +79,66 @@ const getStationByName = async (req, res) => {
     }
 }
 
+const updateStation = async (req, res) => {
+    //get satation by name
+    const station = await Station.findOne({ stationName: req.body.stationName });
 
-module.exports =  {
+    var requestFuelType = req.body.fuelTypes[0];
+
+    // get fuel types to object array
+
+    var fuelTypes = station.fuelTypes;
+    var fuelTypesArray = [];
+    for (var i = 0; i < fuelTypes.length; i++) {
+        var fuelType = fuelTypes[i];
+        var fuelTypeObject = {
+            fuelType: fuelType.fuelType,
+            availability: fuelType.availability,
+            nextArrival: fuelType.nextArrival,
+            liters: fuelType.liters
+        }
+        fuelTypesArray.push(fuelTypeObject);
+    }
+
+    var UpdatedFuelTypesArray = [];
+    for (var i = 0; i < fuelTypesArray.length; i++) {
+        var fuelType = fuelTypesArray[i];
+        if (fuelType.fuelType == requestFuelType.fuelType) {
+            var fuelTypeObject = {
+                fuelType: requestFuelType.fuelType,
+                availability: requestFuelType.availability,
+                nextArrival: requestFuelType.nextArrival,
+                liters: requestFuelType.liters
+            }
+            UpdatedFuelTypesArray.push(fuelTypeObject);
+        }
+        else {
+            UpdatedFuelTypesArray.push(fuelType);
+        }
+    }
+
+
+    //update station
+    station.fuelTypes = UpdatedFuelTypesArray;
+    try {
+        const updatedStation = await station.save();
+        res.json(updatedStation);
+        console.log("updated station = ", updatedStation);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json({ message: err.message });
+    }
+}
+
+
+module.exports = {
     createStation,
     getAllStations,
     getAreas,
     getStationNamesByArea,
-    getStationByName
+    getStationByName,
+    updateStation
 };
 
 
